@@ -103,11 +103,13 @@ class TrainingDataGenerator:
         return 100 - (100 / (1 + rs))
     
     def _calc_macd_hist(self, prices: np.ndarray) -> float:
-        ema12 = prices.ewm(span=12).mean().iloc[-1]
-        ema26 = prices.ewm(span=26).mean().iloc[-1]
+        # Convert to pandas for ewm
+        ps = pd.Series(prices)
+        ema12 = ps.ewm(span=12, adjust=False).mean().iloc[-1]
+        ema26 = ps.ewm(span=26, adjust=False).mean().iloc[-1]
         macd = ema12 - ema26
-        signal = macd  # Simplified
-        return macd
+        signal = ps.ewm(span=9, adjust=False).mean().iloc[-1]
+        return macd - signal
     
     def _calc_bb_pos(self, prices: np.ndarray) -> float:
         ma = np.mean(prices[-20:])

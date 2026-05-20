@@ -200,7 +200,7 @@ class RegimeClassifier:
         else:
             regime = "sideways"
             
-        returns = np.diff(prices[-20:]) / prices[-21:-1]
+        returns = np.diff(prices[-21:]) / prices[-21:-1]
         vol = np.std(returns)
         
         if vol > 0.02:
