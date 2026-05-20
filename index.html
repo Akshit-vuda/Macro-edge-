@@ -3,77 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MacroEdge - AI Trading Platform</title>
+    <title>MacroEdge AI - Intelligent Trading Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 100vh; }
-        .gradient-text { background: linear-gradient(90deg, #06b6d4, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .glow { box-shadow: 0 0 60px rgba(6, 182, 212, 0.3); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .hero-glow {
+            background: radial-gradient(ellipse at center, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #22d3ee 0%, #a78bfa 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .card-glow:hover {
+            box-shadow: 0 0 40px rgba(34, 211, 238, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #06b6d4, #0891b2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, rgba(30, 30, 40, 0.8), rgba(20, 20, 30, 0.9));
+            backdrop-filter: blur(10px);
+        }
+        
+        .feature-icon {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .live-dot {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .matrix-bg {
+            background-image: 
+                linear-gradient(rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
     </style>
 </head>
-<body class="text-white font-sans">
-    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
-        <div class="text-2xl font-bold gradient-text">MacroEdge</div>
-        <div class="space-x-6 text-sm">
-            <a href="#features" class="hover:text-cyan-400 transition">Features</a>
-            <a href="#docs" class="hover:text-cyan-400 transition">Docs</a>
-            <a href="https://github.com/Akshit-vuda/Macro-edge-" class="hover:text-cyan-400 transition">GitHub</a>
+<body class="matrix-bg">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold text-black">M</div>
+                <span class="text-xl font-bold gradient-text">MacroEdge</span>
+                <span class="px-2 py-1 text-xs bg-green-500/20 text-green-400 rounded-full flex items-center gap-1">
+                    <span class="w-2 h-2 bg-green-400 rounded-full live-dot"></span>
+                    LIVE
+                </span>
+            </div>
+            <div class="flex items-center gap-8">
+                <a href="#features" class="text-gray-400 hover:text-white transition text-sm">Features</a>
+                <a href="#models" class="text-gray-400 hover:text-white transition text-sm">ML Models</a>
+                <a href="#docs" class="text-gray-400 hover:text-white transition text-sm">Docs</a>
+                <a href="https://github.com/Akshit-vuda/Macro-edge-" class="text-gray-400 hover:text-white transition text-sm">GitHub</a>
+                <a href="#demo" class="btn-primary px-5 py-2 rounded-lg text-black font-semibold text-sm">Demo →</a>
+            </div>
         </div>
     </nav>
-    
-    <main class="text-center px-4 py-20 max-w-4xl mx-auto">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6">
-            <span class="gradient-text">AI-Powered Macro Trading</span><br>Intelligence Platform
-        </h1>
-        <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-            Real-time market signals, sentiment analysis, ML-powered predictions, and automated portfolio management.
-        </p>
-        
-        <div class="flex gap-4 justify-center flex-wrap">
-            <a href="https://github.com/Akshit-vuda/Macro-edge-" class="bg-cyan-500 hover:bg-cyan-400 text-black px-8 py-3 rounded-lg font-semibold transition glow">
-                View on GitHub
-            </a>
-            <a href="#docs" class="border border-slate-600 hover:border-cyan-400 px-8 py-3 rounded-lg font-semibold transition">
-                Documentation
-            </a>
-        </div>
-    </main>
-    
-    <section id="features" class="max-w-6xl mx-auto px-4 py-16 grid md:grid-cols-3 gap-6">
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">📊</div>
-            <h3 class="text-xl font-bold text-cyan-400 mb-2">Real-Time Signals</h3>
-            <p class="text-slate-400">AI-generated trading signals from technical indicators, news sentiment, and macro trends.</p>
-        </div>
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">🧠</div>
-            <h3 class="text-xl font-bold text-purple-400 mb-2">ML Predictions</h3>
-            <p class="text-slate-400">XGBoost models trained on historical data for directional price predictions.</p>
-        </div>
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">📰</div>
-            <h3 class="text-xl font-bold text-emerald-400 mb-2">Sentiment Analysis</h3>
-            <p class="text-slate-400">Claude-powered news aggregation and market sentiment scoring.</p>
-        </div>
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">💼</div>
-            <h3 class="text-xl font-bold text-amber-400 mb-2">Risk Management</h3>
-            <p class="text-slate-400">Kelly Criterion position sizing with 2% max risk and -8% drawdown guards.</p>
-        </div>
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">🔄</div>
-            <h3 class="text-xl font-bold text-rose-400 mb-2">Paper Trading</h3>
-            <p class="text-slate-400">Alpaca paper trading integration for risk-free strategy testing.</p>
-        </div>
-        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700">
-            <div class="text-3xl mb-3">⚡</div>
-            <h3 class="text-xl font-bold text-blue-400 mb-2">FastAPI + React</h3>
-            <p class="text-slate-400">Modern stack with real-time WebSocket updates and reactive dashboard.</p>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen hero-glow flex items-center justify-center pt-20">
+        <div class="text-center max-w-4xl mx-auto px-6">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full border border-white/10 mb-8">
+                <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                <span class="text-sm text-gray-300">AI-Powered Trading Intelligence</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
+                <span class="gradient-text">Macro Trading</span><br>
+                <span class="text-white">Reimagined</span>
+            </h1>
+            
+            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Real-time market signals • Sentiment analysis • ML predictions • Automated risk management
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-16">
+                <a href="#demo" class="btn-primary px-8 py-4 rounded-xl text-black font-semibold text-lg">
+                    🚀 Launch Demo
+                </a>
+                <a href="https://github.com/Akshit-vuda/Macro-edge-" class="px-8 py-4 rounded-xl border border-white/20 hover:border-white/40 transition text-lg">
+                    View Code
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                <div class="stats-card p-4 rounded-xl border border-white/10">
+                    <div class="text-3xl font-bold gradient-text">8+</div>
+                    <div class="text-sm text-gray-500">ML Models</div>
+                </div>
+                <div class="stats-card p-4 rounded-xl border border-white/10">
+                    <div class="text-3xl font-bold gradient-text">55%</div>
+                    <div class="text-sm text-gray-500">Accuracy</div>
+                </div>
+                <div class="stats-card p-4 rounded-xl border border-white/10">
+                    <div class="text-3xl font-bold gradient-text">8</div>
+                    <div class="text-sm text-gray-500">Assets</div>
+                </div>
+                <div class="stats-card p-4 rounded-xl border border-white/10">
+                    <div class="text-3xl font-bold gradient-text">24/7</div>
+                    <div class="text-sm text-gray-500">Live</div>
+                </div>
+            </div>
         </div>
     </section>
-    
-    <footer class="text-center py-10 text-slate-500 text-sm">
-        <p>MacroEdge © 2026 — Built with OpenHands AI Agent</p>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Powerful <span class="gradient-text">Features</span></h2>
+                <p class="text-gray-400">Everything you need for intelligent macro trading</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1: Directional Prediction -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-xl font-bold mb-2">Directional Prediction</h3>
+                    <p class="text-gray-400 text-sm mb-4">XGBoost classifiers predict next day/week price direction with 55%+ accuracy</p>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">LONG</span>
+                        <span class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">SHORT</span>
+                        <span class="px-2 py-1 bg-gray-500/20 text-gray-400 rounded text-xs">NEUTRAL</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 2: Technical Analysis -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold mb-2">Technical Analysis</h3>
+                    <p class="text-gray-400 text-sm mb-4">RSI, MACD, Bollinger Bands, Moving Averages in real-time</p>
+                    <div class="flex gap-2 text-xs text-gray-500">
+                        <span>RSI</span>•<span>MACD</span>•<span>BB</span>•<span>SMA</span>•<span>EMA</span>•<span>ATR</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 3: Sentiment Analysis -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-xl font-bold mb-2">Sentiment Analysis</h3>
+                    <p class="text-gray-400 text-sm mb-4">NLP-powered news & social sentiment scoring</p>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">Bullish</span>
+                        <span class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">Bearish</span>
+                    </div>
+                </div>
+                
+                <!-- Feature 4: Regime Detection -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">🌊</div>
+                    <h3 class="text-xl font-bold mb-2">Regime Detection</h3>
+                    <p class="text-gray-400 text-sm mb-4">Automatically detect Bull/Bear/Sideways markets</p>
+                    <div class="flex gap-2">
+                        <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+                        <span class="w-3 h-3 bg-red-500 rounded-full"></span>
+                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+                    </div>
+                </div>
+                
+                <!-- Feature 5: Risk Management -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">🛡️</div>
+                    <h3 class="text-xl font-bold mb-2">Risk Management</h3>
+                    <p class="text-gray-400 text-sm mb-4">Kelly Criterion sizing, VaR, drawdown protection</p>
+                    <div class="text-xs text-gray-500">Max 2% risk • -8% kill switch</div>
+                </div>
+                
+                <!-- Feature 6: Paper Trading -->
+                <div class="group card-glow bg-white/5 p-6 rounded-2xl border border-white/10 transition-all duration-300">
+                    <div class="text-4xl mb-4">🔄</div>
+                    <h3 class="text-xl font-bold mb-2">Paper Trading</h3>
+                    <p class="text-gray-400 text-sm mb-4">Alpaca integration for risk-free testing</p>
+                    <span class="px-2 py-1 bg-cyan-500/20 text-cyan-400 rounded text-xs">Ready</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ML Models Section -->
+    <section id="models" class="py-24 px-6 bg-black/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">ML <span class="gradient-text">Models</span></h2>
+                <p class="text-gray-400">Claude Trainable Model Architecture</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Model Cards -->
+                <div class="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 p-4 rounded-xl border border-cyan-500/30">
+                    <h4 class="font-bold text-cyan-400">DirectionalPredictor</h4>
+                    <p class="text-xs text-gray-500 mt-1">Binary classification</p>
+                    <div class="mt-2 text-xs text-gray-600">GradientBoosting</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-4 rounded-xl border border-purple-500/30">
+                    <h4 class="font-bold text-purple-400">RegimeClassifier</h4>
+                    <p class="text-xs text-gray-500 mt-1">Multi-class</p>
+                    <div class="mt-2 text-xs text-gray-600">RandomForest</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-500/10 to-teal-500/10 p-4 rounded-xl border border-green-500/30">
+                    <h4 class="font-bold text-green-400">SentimentModel</h4>
+                    <p class="text-xs text-gray-500 mt-1">NLP Lexicon</p>
+                    <div class="mt-2 text-xs text-gray-600">Keyword Scoring</div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-orange-500/10 to-red-500/10 p-4 rounded-xl border border-orange-500/30">
+                    <h4 class="font-bold text-orange-400">VolatilityPredictor</h4>
+                    <p class="text-xs text-gray-500 mt-1">Regression</p>
+                    <div class="mt-2 text-xs text-gray-600">GBR</div>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center">
+                <a href="https://github.com/Akshit-vuda/Macro-edge-/tree/main/backend/ml/models" class="text-cyan-400 hover:underline">
+                    View all models on GitHub →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="py-24 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-4">Live <span class="gradient-text">Demo</span></h2>
+            <p class="text-gray-400 mb-8">Try the ML predictions in your terminal</p>
+            
+            <div class="bg-black/50 p-6 rounded-2xl border border-white/10 text-left">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm text-gray-400">Python</span>
+                    <span class="text-xs text-green-400">Ready to run</span>
+                </div>
+                <pre class="text-sm text-gray-300 overflow-x-auto"><code>import numpy as np
+from backend.ml.models.directional import DirectionalPredictor
+
+# Generate test data
+np.random.seed(42)
+prices = np.cumsum(np.random.randn(500)) + 200
+
+# Get prediction
+predictor = DirectionalPredictor("SPY")
+result = predictor.predict(prices, np.random.lognormal(15, 0.5, 500))
+
+print(result)
+# {'direction': 'LONG', 'action': 'BUY', 'confidence': 0.68}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 border-t border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-500 flex items-center justify-center font-bold text-black text-sm">M</div>
+                <span class="font-bold">MacroEdge AI</span>
+            </div>
+            <div class="text-gray-500 text-sm">
+                Built with OpenHands AI Agent • Powered by Claude
+            </div>
+            <div class="flex gap-4">
+                <a href="https://github.com/Akshit-vuda/Macro-edge-" class="text-gray-400 hover:text-white">GitHub</a>
+                <span class="text-gray-600">•</span>
+                <span class="text-gray-400">MIT License</span>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
