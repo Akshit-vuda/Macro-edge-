@@ -68,7 +68,7 @@ def format_risk_metrics(data: Dict) -> str:
     lines = []
     lines.append(f"Sharpe Ratio: {data.get('sharpe_ratio', 0):.2f}")
     lines.append(f"Max Drawdown: {data.get('max_drawdown', 0):.1%}")
-    lines.append(f VaR (95%): ${data.get('var_95', 0):,.2f}")
+    lines.append(f"VaR (95%): ${data.get('var_95', 0):,.2f}")
     lines.append(f"Win Rate: {data.get('win_rate', 0):.1%}")
     lines.append(f"Volatility: {data.get('volatility', 0):.1%}")
     

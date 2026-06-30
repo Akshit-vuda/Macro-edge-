@@ -13,14 +13,21 @@ from pathlib import Path
 from typing import List, Dict, Tuple
 import hashlib
 
+# Repo-relative paths (this file lives at backend/ml/training_pipeline.py)
+_ML_DIR = Path(__file__).resolve().parent
+_REPO_ROOT = _ML_DIR.parent.parent
+_DEFAULT_DATA_DIR = _ML_DIR / "training_data"
+_DEFAULT_MODELS_DIR = _ML_DIR / "trained_models"
+_DEFAULT_FRONTEND_PUBLIC = _REPO_ROOT / "frontend" / "public"
+
 
 class TrainingDataGenerator:
     """Generate synthetic training data for all ML models"""
     
     def __init__(self, symbols: List[str] = None):
         self.symbols = symbols or ["SPY", "QQQ", "IWM", "TLT", "GLD", "XLE", "XLF", "XLK"]
-        self.data_dir = Path("/workspace/project/backend/ml/training_data")
-        self.data_dir.mkdir(exist_ok=True)
+        self.data_dir = _DEFAULT_DATA_DIR
+        self.data_dir.mkdir(parents=True, exist_ok=True)
         
     def generate_price_series(self, start_price: float, days: int, 
                           trend: float = 0, volatility: float = 0.02) -> np.ndarray:
@@ -142,10 +149,10 @@ class TrainingDataGenerator:
 class ModelTrainer:
     """Train all ML models"""
     
-    def __init__(self, data_dir: str = "/workspace/project/backend/ml/training_data"):
-        self.data_dir = Path(data_dir)
-        self.models_dir = Path("/workspace/project/backend/ml/trained_models")
-        self.models_dir.mkdir(exist_ok=True)
+    def __init__(self, data_dir: str = None):
+        self.data_dir = Path(data_dir) if data_dir else _DEFAULT_DATA_DIR
+        self.models_dir = _DEFAULT_MODELS_DIR
+        self.models_dir.mkdir(parents=True, exist_ok=True)
         
     def train_directional(self, df: pd.DataFrame) -> Dict:
         """Train directional predictor"""
@@ -260,8 +267,8 @@ Generated: {datetime.now().isoformat()}
 class WebsiteSyncer:
     """Sync model predictions to website"""
     
-    def __init__(self, output_dir: str = "/workspace/project/frontend/public"):
-        self.output_dir = Path(output_dir)
+    def __init__(self, output_dir: str = None):
+        self.output_dir = Path(output_dir) if output_dir else _DEFAULT_FRONTEND_PUBLIC
         
     def export_predictions(self, predictions: Dict):
         """Export predictions as JSON for website"""

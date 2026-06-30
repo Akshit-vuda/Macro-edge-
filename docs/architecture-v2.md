@@ -117,9 +117,12 @@ See §6 for the full RL design. In brief:
 - Every order passes a **pre-trade check chain** (sizing → exposure → PDT → liquidity → confidence ≥ `MIN_SIGNAL_CONFIDENCE`) before it can reach L6.
 
 ### L6 — Execution / OMS
-- **Alpaca** (`AlpacaClient`) for paper → live, with **idempotency keys**, order-state reconciliation, and fill capture into the journal. (Fix the `iterable(bars)` bug in `get_bars`.)
-- **Manual venue (Robinhood):** if used, the OMS emits a **fully-specified ticket** (symbol, side, qty/notional, limit, rationale) to Slack; the human executes and confirms the fill back, which the OMS records. No unofficial-API automation.
-- **Sim↔live parity:** the same order-intent object flows through backtest, paper, and live so behavior is consistent.
+- **One `BrokerAdapter` interface, two implementations.** Define a single abstract interface (`get_account`, `get_positions`, `submit_order`, `cancel_order`, `get_bars`, `is_market_open`) so the OMS, risk layer, and RL env never know which broker is live:
+  - **`AlpacaAdapter`** (paper) — wrap the existing `AlpacaClient`; fix the `iterable(bars)` bug.
+  - **`MoomooAdapter`** (live, **decided**) — `futu`/`moomoo` SDK talking to the **OpenD gateway** sidecar; handles auth, trade-context unlock, fractional/qty rules, and HK/US market routing.
+- **OMS:** idempotency keys, order-state reconciliation, and fill capture into the journal.
+- **Manual venue (Robinhood):** optional only — OMS emits a **fully-specified ticket** to Slack; human executes and confirms the fill, which the OMS records. No unofficial-API automation.
+- **Sim↔live parity:** the same order-intent object flows through backtest → Alpaca paper → moomoo live, so behavior is consistent across all three.
 
 ### L7 — Interface / ChatOps (Slack)
 - **Slack Bolt for Python + Socket Mode** (no public URL, good for a private setup).
@@ -164,8 +167,8 @@ yfinance news ─┘                                                     │
 |---|---|---|
 | Brain / reasoning | **Claude, Obsidian** | Anthropic Messages API (tool-use), **MCP server**, **LanceDB** (RAG over vault), prompt caching |
 | ChatOps | **Slack** | **slack-bolt** + Socket Mode; approve/reject buttons |
-| Live execution | **Robinhood** | ⚠️ no official API → **Alpaca live** for automation; Robinhood = manual ticket only |
-| Paper trading | **Alpaca** | already wrapped — keep |
+| Live execution | **moomoo (decided)** | **moomoo OpenAPI** via OpenD gateway — consolidates screening + live execution in one vendor. Robinhood = manual ticket only (no official API). |
+| Paper trading | **Alpaca** | already wrapped — keep. Both brokers sit behind one `BrokerAdapter` interface for sim↔paper↔live parity |
 | Screening | **moomoo** | **moomoo OpenD gateway** + `futu` SDK (also a live-trading option) |
 | News | **Yahoo Finance** | `yfinance.news` + existing RSS; optional NewsAPI |
 | ML / RL | **from scratch** | **Gymnasium + Stable-Baselines3** (PPO/SAC), **FinRL** patterns, **vectorbt** (research backtest), **Nautilus Trader** (event-driven sim↔live parity) |
@@ -247,10 +250,5 @@ A policy may only advance when it clears explicit, pre-registered thresholds at 
 
 ---
 
-## 9. Open decision (blocks the execution layer)
-**Live-execution venue.** Robinhood has no compliant automation API. Options:
-1. **Alpaca live** (recommended) — full automation, same API as paper, smallest code delta.
-2. **moomoo OpenAPI live** — also automatable; consolidates screening + execution in one vendor.
-3. **Robinhood manual** — system proposes, you click — keeps your $200 where it is, but no automation.
-
-This is the one fork that materially changes L6; everything else proceeds regardless.
+## 9. Decided: live-execution venue = moomoo OpenAPI
+**moomoo OpenAPI (via the OpenD gateway)** is the chosen live venue, consolidating screening + execution in one vendor. Alpaca remains the **paper** venue. Both sit behind the single `BrokerAdapter` interface (§L6) so the rest of the system is venue-agnostic and sim↔paper↔live parity holds. Robinhood is manual-ticket-only if used at all. Practical notes for implementation: moomoo requires the **OpenD desktop/headless gateway running** and a **trade-context unlock** before live orders; US-equity trading entitlements and fractional-share rules must be confirmed for the account.

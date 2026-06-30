@@ -223,7 +223,7 @@ class AlpacaClient:
                     'c': b.c,
                     'v': b.v
                 }
-                for b in iterable(bars)
+                for b in bars
             ]
         except Exception as e:
             logger.error(f"Get bars error: {e}")
