@@ -1,0 +1,34 @@
+Rank,Layer,Ticker,Company,Listing,Price,Currency,AsOf,Wk52_Low,Wk52_High,Score,Fin_25,Growth_20,Valuation_20,Catalysts_20,Risk_15,Consensus,Avg_Target,Verdict
+1,2-Silicon,NVDA,NVIDIA,Nasdaq,195.14,USD,2026-06-30,151.49,236.54,87,24,19,17,17,10,Strong Buy,292,Anchor holding; de-rated into growth re-accel
+2,3-Memory,MU,Micron,Nasdaq,1199.52,USD,2026-06-24,385,1213,85,22,20,18,17,8,Strong Buy,1437,Best growth-for-multiple; fwd P/E ~8-9x
+3,2-Silicon,AVGO,Broadcom,Nasdaq,375.51,USD,2026-06-30,262.66,495.00,84,23,19,15,17,10,Strong Buy,520,Premier custom-silicon+networking; core
+4,1-Fab,TSM,TSMC,NYSE ADR,468.80,USD,2026-06-30,221.18,476.79,83,23,18,17,16,9,Strong Buy,487.56,Lowest-risk way to own whole stack; core
+4,3-Memory,000660,SK hynix,KRX (ADR HXSCL),2650000,KRW,2026-06-30,,2987000,83,22,20,16,16,9,Strong Buy,3094448,Purest HBM leader; mind FX/liquidity
+6,6-Energy,VST,Vistra,NYSE,160.23,USD,2026-06-30,,,80,20,16,17,17,10,Strong Buy,228,Top energy pick; cheap ~16x + NVDA-linked JV
+7,6-Energy,CEG,Constellation,Nasdaq,259.00,USD,2026-06-30,240.51,412.70,79,20,17,16,16,10,Buy,360,Cleanest nuclear-to-AI; off highs; core
+8,3-Memory,005930,Samsung,KRX (OTC SSNLF),323000,KRW,2026-06-29,,374500,78,20,17,15,16,10,Buy,420000,Cheapest HBM4 entry; catch-up optionality
+9,4-Network,ANET,Arista,NYSE,165.46,USD,2026-06-29,97.14,179.80,77,22,17,13,15,10,Strong Buy,190,Cleanest networking compounder; debt-free
+10,6-Energy,PWR,Quanta,NYSE,701.88,USD,2026-06-25,363.01,788.75,75,21,16,13,14,11,Buy,761,Best picks-and-shovels grid buildout
+11,4-Network,MRVL,Marvell,Nasdaq,296.80,USD,2026-06-30,61.44,329.88,73,19,18,11,16,9,Buy,176,#2 custom silicon; ran past targets
+12,1-Fab,ASML,ASML,Nasdaq,1673.60,EUR,2026-06-30,587.80,1711.40,72,22,15,12,14,9,Strong Buy,2019,Best moat; 62x + lumpy orders; size for vol
+12,2-Silicon,AMD,AMD,Nasdaq,579.00,USD,2026-06-30,133.50,582.58,72,18,18,10,17,9,Strong Buy,504,Real share gains; priced for flawless MI450
+14,4-Network,RMBS,Rambus,Nasdaq,123.32,USD,2026-06-30,61.16,174.10,71,20,15,13,13,10,Buy,144.57,Quiet memory-interface play; target upside
+14,4-Network,LITE,Lumentum,Nasdaq,908.00,USD,2026-06-30,88.37,1085.68,71,18,18,10,17,8,Buy,995,EML duopoly w/ NVDA capital; high-beta
+14,6-Energy,NEE,NextEra,NYSE,87.79,USD,2026-06-30,67.20,98.75,71,18,14,16,13,10,Buy,98.47,Defensive AI-power; rate-sensitive compounder
+17,1-Fab,KLAC,KLA,Nasdaq,302.00,USD,2026-06-30,83.22,302.00,69,21,14,10,15,9,Buy,210,Elite franchise but above target; wait
+17,1-Fab,LRCX,Lam Research,Nasdaq,379.09,USD,2026-06-26,90.94,409.75,69,20,16,9,16,8,Buy,326,Best HBM/DRAM capex proxy; priced for perfection
+17,3-Memory,STX,Seagate,Nasdaq,899.90,USD,2026-06-27,,1085,69,19,15,13,14,8,Buy,898,HAMR leader; parabolic run; size for vol
+17,4-Network,SIMO,Silicon Motion,Nasdaq,319.00,USD,2026-06-23,70.12,355.00,69,17,16,13,14,9,Strong Buy,381,Value-tilt AI-storage controller
+21,6-Energy,GEV,GE Vernova,NYSE,1087.00,USD,2026-06-29,482.20,1181.95,68,18,18,8,16,8,Buy,1212,Best demand visibility; priciest multiple
+21,3-Memory,285A,Kioxia,Tokyo,89680,JPY,2026-06-30,,,68,17,15,15,13,8,Buy,110594,Cheapest least-crowded NAND; public since Dec-24
+23,4-Network,COHR,Coherent,NYSE,391.00,USD,2026-06-30,76.88,440.00,67,15,16,11,17,8,Buy,384,Leveraged optics turnaround; NVDA in cap table
+24,3-Memory,WDC,Western Digital,Nasdaq,638.57,USD,2026-06-30,,,67,19,14,12,13,9,Strong Buy,584.79,Data-gravity beneficiary; above target
+25,4-Network,ALAB,Astera Labs,Nasdaq,475.00,USD,2026-06-30,85.85,499.48,66,19,18,6,16,7,Buy,268,Best product econ; most stretched; wait for reset
+25,6-Energy,BE,Bloom Energy,NYSE,307.00,USD,2026-06-30,21.52,351.28,66,16,19,7,17,7,Buy,267,Explosive growth; speculative multiple
+27,5-Neocloud,NBIS,Nebius,Nasdaq,264.15,USD,2026-06-30,43.89,299.86,64,14,19,7,17,7,Moderate Buy,244,Best-capitalized neocloud; satellite only
+28,5-Neocloud,CRWV,CoreWeave,Nasdaq,95.51,USD,2026-06-30,63.80,183.98,62,12,19,12,16,3,Buy,132.68,Beaten-down contrarian; ~$35B debt; high-risk
+29,3-Memory,SNDK,SanDisk,Nasdaq,2144.00,USD,2026-06-30,,,60,17,17,6,14,6,Buy,2000,Clearest "don't chase"; targets below price
+30,5-Neocloud,IREN,IREN,Nasdaq,45.56,USD,2026-06-30,13.99,76.87,58,11,18,9,15,5,Buy,70.40,Leveraged pivot; crypto beta; speculative
+31,5-Neocloud,APLD,Applied Digital,Nasdaq,42.00,USD,2026-06-30,9.02,50.73,57,11,17,9,14,6,Strong Buy,73.36,Riskiest; daisy-chain + NVDA exit; spec only
+32,6-Energy,EOSE,Eos Energy,Nasdaq,7.00,USD,2026-06-30,4.37,19.86,52,8,16,11,12,5,Buy/Hold,9.40,Venture-style LDES option; highest risk
+33,2-Silicon,INTC,Intel,Nasdaq,129.70,USD,2026-06-30,18.97,141.45,47,8,11,7,15,6,Hold,97,Show-me lottery ticket; price ~25% above target
