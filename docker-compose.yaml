@@ -1,7 +1,7 @@
 # Docker Compose for MacroEdge
 
 services:
-  backend:
+  api:
     build: .
     ports:
       - "8000:8000"
@@ -19,3 +19,45 @@ services:
     stdin_open: true
     tty: true
     restart: unless-stopped
+
+  worker:
+    build: .
+    command: python prefect_worker.py
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  mlflow:
+    build: .
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:////app/data/mlruns/mlflow.db --default-artifact-root /app/data/mlruns
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: unless-stopped
+
+volumes:
+  prometheus_data:
+  grafana_data:

@@ -17,8 +17,15 @@ from config.settings import DATABASE_URL
 class DatabaseService:
     """Async database operations."""
     
-    def __init__(self, url: str = None):
-        self.url = url or DATABASE_URL.replace("sqlite:///", "sqlite+aiosqlite:///")
+    def __init__(self, url: Optional[str] = None) -> None:
+        """
+        Initialize DatabaseService.
+        
+        Args:
+            url (Optional[str]): The database connection URL.
+        """
+        target_url = url or DATABASE_URL
+        self.url = target_url.replace("sqlite:///", "sqlite+aiosqlite:///")
         self.engine = create_async_engine(self.url, echo=False)
         self.async_session = sessionmaker(
             self.engine, class_=AsyncSession, expire_on_commit=False
