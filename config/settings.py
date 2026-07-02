@@ -3,8 +3,11 @@ MacroEdge Configuration
 All settings managed from this central file.
 """
 
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 # Base Paths
 BASE_DIR = Path(__file__).parent.resolve()
@@ -21,12 +24,28 @@ ALPACA_PAPER = os.getenv("ALPACA_PAPER", "true").lower() == "true"
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 CLAUDE_MODEL = os.getenv("CLAUDE_MODEL", "claude-sonnet-5")
+CLAUDE_DAILY_USD_CAP = float(os.getenv("CLAUDE_DAILY_USD_CAP", "5.00"))
+
+# moomoo / Futu (LIVE execution via OpenD gateway)
+MOOMOO_OPEND_HOST = os.getenv("MOOMOO_OPEND_HOST", "127.0.0.1")
+MOOMOO_OPEND_PORT = int(os.getenv("MOOMOO_OPEND_PORT", "11111"))
+MOOMOO_TRADE_PWD = os.getenv("MOOMOO_TRADE_PWD", "")
+MOOMOO_TRADE_ENV = os.getenv("MOOMOO_TRADE_ENV", "SIMULATE")
+MOOMOO_ACCOUNT_ID = os.getenv("MOOMOO_ACCOUNT_ID", "")
 
 NEWSAPI_KEY = os.getenv("NEWSAPI_KEY", "")
 
 # Market Data
 POLYGON_API_KEY = os.getenv("POLYGON_API_KEY", "")
 USE_POLYGON = os.getenv("USE_POLYGON", "false").lower() == "true"
+
+# Slack (ChatOps)
+SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN", "")
+SLACK_APP_TOKEN = os.getenv("SLACK_APP_TOKEN", "")
+SLACK_APPROVAL_CHANNEL = os.getenv("SLACK_APPROVAL_CHANNEL", "")
+
+# MLflow (learning tracking)
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "http://127.0.0.1:5000")
 
 # Asset Universe
 TARGET_ASSETS = {
@@ -63,3 +82,22 @@ RSS_FEEDS = [
 # Logging
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 DAILY_REPORT_TIME = "07:00"  # UTC
+
+# Critical keys required for full functionality; missing ones only warn (see validate_settings).
+_CRITICAL_KEYS = {
+    "ANTHROPIC_API_KEY": ANTHROPIC_API_KEY,
+    "ALPACA_API_KEY": ALPACA_API_KEY,
+    "ALPACA_SECRET_KEY": ALPACA_SECRET_KEY,
+}
+
+
+def validate_settings() -> None:
+    """Log a WARNING for each missing critical setting. Never raises.
+
+    Intended to be called at startup so missing config is visible in logs
+    without blocking import or process start (e.g. paper-trading-only runs
+    that don't need every key set).
+    """
+    for name, value in _CRITICAL_KEYS.items():
+        if not value:
+            logger.warning("Missing critical setting: %s is not set", name)
