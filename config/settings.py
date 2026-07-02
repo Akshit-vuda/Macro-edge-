@@ -7,7 +7,13 @@ import logging
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 logger = logging.getLogger(__name__)
+
+# Load the repo-root .env (gitignored) so real credentials reach the app.
+# Values already set in the real environment take precedence.
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 # Base Paths
 BASE_DIR = Path(__file__).parent.resolve()
