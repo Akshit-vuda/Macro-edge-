@@ -18,7 +18,10 @@ An AI-supervised, self-learning macro/futures trading system starting from a **$
 
 ## Where things live
 - **Code:** this repo (`Akshit-vuda/Macro-edge-`).
-- **Plan & tickets (canonical):** Confluence space "My first space" → *MacroEdge v2 — Development Plan & Build Tickets* (+ Epic A–F child pages + a Status Log). Mirror of `docs/build-backlog.md`.
+- **Confluence** (site `akki0102.atlassian.net`, space `MFS` "My first space"), cloudId `6e98d988-6393-4d87-ae14-b877b9dacc94`:
+  - **Development Plan & Build Tickets** — page `557057` (canonical spec; mirror of `docs/build-backlog.md`).
+  - **Development Notes (dev log)** — page `1343489` (per-ticket what/files/decisions/verification/deviations).
+  - **Status Log** — page `884738` (repo state + ticket status over time).
 - **Obsidian vault:** `C:\Users\akshi\Brain` (this repo lives at `Projects/MacroEdge`; journal folders `Theses/Tickers/Journal/Models/Playbooks` match ticket D3).
 
 ## Architecture at a glance (layers)
@@ -34,6 +37,7 @@ L0 foundation · L1 ingestion (moomoo/Alpaca/yfinance) · L2 DuckDB+Parquet lake
 - Brokers/data are touched **only** through the adapter interfaces — never a vendor SDK from strategy/risk code.
 - **Paper/SIMULATE only** in code until an explicit live-gate; never hardcode live trading.
 - Keep each commit scoped to one ticket; self-run the Review Gate (parent Confluence page) before pushing.
+- **Dev-note per ticket/agent:** every builder (incl. each sub-agent) ends with a dev-note — what / files / decisions / verification / deviations. Append it to the Confluence **Development Notes** page (`1343489`). Put this instruction in every sub-agent's prompt.
 
 ## Commands
 ```bash
@@ -53,4 +57,4 @@ docker compose up           # once A1 lands: api/worker/mlflow/grafana/prometheu
 1. `git status` + `git log --oneline -5` — check for **uncommitted local work** (e.g. an earlier A1/B1 attempt) before starting; if present, review/salvage or discard deliberately.
 2. `git fetch && git status` vs the working branch; pull if behind.
 3. Confirm which ticket to build, implement it end-to-end with tests, self-run the Review Gate, commit, push.
-4. Update the Confluence **Status Log** page after each ticket.
+4. After each ticket: update the Confluence **Status Log** (`884738`) and append a dev-note to **Development Notes** (`1343489`).
