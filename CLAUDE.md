@@ -9,6 +9,7 @@ An AI-supervised, self-learning macro/futures trading system starting from a **$
 - It is **just the user and Claude**. No external coding agents (Antigravity/Lovable) anymore.
 - **Claude builds directly**: implement tickets in this repo, write tests, run them, commit, and push to the working branch. The "delegate to Antigravity" language in `docs/build-backlog.md` is obsolete — treat those tickets as **your own** work items; the interface contracts, acceptance criteria, and Review Gate still apply as **self-review** before you push.
 - Working branch: **`claude/equity-analyst-stock-research-3xu1e2`**. Commit and push there unless told otherwise.
+- **Multi-agent orchestration:** see `AGENTS.md` for agent roles, the dev-note contract, and how to run several independent tickets in parallel safely (disjoint files, one pusher).
 
 ## Key decisions (locked)
 - Live venue = **moomoo OpenAPI** (via OpenD gateway); paper = **Alpaca**. Both behind ONE `BrokerAdapter` interface.
