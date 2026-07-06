@@ -8,6 +8,9 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 
+# XGBoost directional model (migrated out of the old shadowing models.py)
+from .technical_model import TechnicalModel, create_features
+
 
 class MarketRegime(Enum):
     BULL = "bull"

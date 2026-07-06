@@ -30,8 +30,10 @@ def test_import_ml() -> None:
     import backend.ml.models as m
     import backend.ml.technical_analysis as ta
     import backend.ml.training_pipeline as tp
-    
+
     assert m is not None
+    # Guards the file/package collision: routes.py needs these off the package.
+    assert m.TechnicalModel is not None
     assert ta is not None
     assert tp is not None
 

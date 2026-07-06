@@ -14,7 +14,7 @@ from backend.services.news_intelligence import (
     NewsScraper, SentimentAnalyzer, process_news_articles
 )
 from backend.ml.technical_analysis import TechnicalAnalyzer
-from backend.ml.models import TechnicalModel, RegimeDetector
+from backend.ml.models import TechnicalModel
 from backend.services.trading import AlpacaClient
 from backend.services.claude_brain import ClaudeSupervisor
 from backend.services.risk_management import RiskManager
@@ -76,7 +76,6 @@ trading_client = AlpacaClient()
 claude_supervisor = ClaudeSupervisor()
 risk_manager = RiskManager()
 technical_model = TechnicalModel()
-regime_detector = RegimeDetector()
 
 
 # ==========================================
