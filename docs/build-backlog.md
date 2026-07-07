@@ -123,8 +123,8 @@ A ticket merges only when ALL hold:
       def cancel_order(self, order_id: str) -> None: ...
       def is_market_open(self) -> bool: ...
   ```
-  `OrderIntent` carries `client_id, symbol, side, qty|notional, type, limit_price, tif, rationale, signal_id, model_version`.
-- **Acceptance:** typed dataclasses for `AccountState/Position/OrderIntent/OrderResult`; provenance fields (`rationale, signal_id, model_version`) are required on `OrderIntent`.
+  `OrderIntent` carries `client_id, symbol, side, qty|notional, type, limit_price, tif, rationale, signal_id, model_version` **plus required `stop_price` and `target_price`** (playbook July 2026: "write the exit first" — no intent exists without an explicit exit plan).
+- **Acceptance:** typed dataclasses for `AccountState/Position/OrderIntent/OrderResult`; provenance fields (`rationale, signal_id, model_version`) AND exit fields (`stop_price, target_price`) are required on `OrderIntent`.
 - **Tests:** a `FakeBroker` implements the interface and round-trips an order.
 
 ### C2 · AlpacaAdapter (paper)
@@ -142,14 +142,20 @@ A ticket merges only when ALL hold:
 ### C4 · OMS (order management + reconciliation)
 - **Depends-on:** C2  · **Delegate:** Cursor
 - **Objective:** `backend/services/oms.py` — accept `OrderIntent`, run the pre-trade check chain (calls C5 + risk), submit via the active adapter, persist order/fill, reconcile state, write a journal entry.
-- **Acceptance:** an intent that fails any pre-trade check is rejected with a reason and never submitted; every fill is persisted with full provenance.
+- **Acceptance:** an intent that fails any pre-trade check is rejected with a reason and never submitted; the check chain **rejects any intent lacking an explicit `stop_price` AND `target_price`** (exit-first rule); every fill is persisted with full provenance.
 - **Tests:** reject-on-failed-check test; fill-persistence test.
 
 ### C5 · Risk + PDT/settlement engine (correctness-critical)
 - **Depends-on:** C1  · **Delegate:** spec+review by Claude; boilerplate by Cursor
-- **Objective:** `backend/services/compliance.py` — hard pre-trade gate: micro-account vol-targeted fractional sizing, exposure caps, `-8%` drawdown kill-switch (reuse `risk_management.py`), and a **PDT counter** (≤3 day-trades / rolling 5 business days under $25k) + cash-settlement tracker.
-- **Acceptance:** the 4th day-trade in a 5-day window is **blocked**; unsettled cash cannot be reused in a cash account; sizing returns fractional notional, never a flat 2%.
-- **Tests:** PDT 4th-trade block test; settlement-reuse block test; sizing test at $200.
+- **Objective:** `backend/services/compliance.py` — hard pre-trade gate: micro-account **volatility-targeted fractional sizing** with playbook caps (July 2026): per-position cap **~8% of equity** (half-size **~4%** for high-volatility names), keep a **15–20% cash buffer** at all times; exposure caps; `-8%` drawdown kill-switch (reuse `risk_management.py`); a **PDT counter** (≤3 day-trades / rolling 5 business days under $25k) + cash-settlement tracker; **exit-first check** — reject any intent without an explicit `stop_price` AND `target_price`. This supersedes the legacy flat 2% `MAX_POSITION_SIZE`.
+- **Acceptance:** the 4th day-trade in a 5-day window is **blocked**; unsettled cash cannot be reused in a cash account; sizing returns fractional notional, never a flat 2%; a sized intent never exceeds the 8%/4% cap nor dips the cash buffer below 15%; an intent without stop/target is rejected.
+- **Tests:** PDT 4th-trade block test; settlement-reuse block test; sizing test at $200 (caps + cash buffer); missing-exit rejection test.
+
+### C6 · Exit Rule Engine (portfolio health report)
+- **Depends-on:** C4, B4  · **Delegate:** Cursor/Claude Code
+- **Objective:** scheduled portfolio health report (playbook July 2026): for every open position check (a) stop distance / stop hit, (b) price vs the **50-day and 200-day MA** (momentum names: close below the 50-day = exit signal, no averaging down), (c) **upcoming earnings dates** within the horizon; emit a per-name **HOLD / ATTENTION** verdict with reasons, delivered via the journal + Slack (F3).
+- **Acceptance:** the report runs on a schedule, covers every open position, and each name gets a verdict with at least one machine-checkable reason; a position breaching its stop or 50-day (momentum) is flagged ATTENTION.
+- **Tests:** verdict-logic tests (stop breach → ATTENTION, healthy name → HOLD); earnings-window flag test.
 
 ---
 
@@ -186,6 +192,7 @@ A ticket merges only when ALL hold:
 ### E1 · Supervised signal models on real data
 - **Depends-on:** B5  · **Delegate:** Cursor
 - **Objective:** retrain directional/regime/volatility/sentiment models (`backend/ml/models/*`) on **real** feature-store data with **walk-forward** splits; log to MLflow. Keep the synthetic generator as a sandbox only.
+- **Playbook entry filter (July 2026 — apply to any screening/candidate pipeline):** reject candidates that (a) trade **above the consensus analyst price target**, (b) sit **below an unrecovered 200-day MA**, (c) lack a **dated catalyst within 90 days**, or (d) belong to a **sector in a bear market**. Momentum names use a **close below the 50-day MA** as the exit signal — no averaging down.
 - **Acceptance:** each model logs OOS metrics to MLflow; no leakage (strictly time-ordered splits).
 - **Tests:** leakage guard test (train ts < test ts); MLflow logging test.
 
